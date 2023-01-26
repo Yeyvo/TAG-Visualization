@@ -8,7 +8,7 @@ after you install helm use these commands:
 ### Clone this repo
 `git clone https://github.com/oubaydos/TAG-Visualization`
 ### Update cassandra url in deployment yaml files
-Note: check this repo for a terraform script that creates a gcp VM with cassandra in port 9042
+Note: check this repo [Terraform Repo](https://github.com/oubaydos/terraform/tree/cassandra) for a terraform script that creates a gcp VM with cassandra in port 9042
 ### apply the deployment files
 `kubectl apply -f deployment`
 
