@@ -1,15 +1,15 @@
-## Requirements
+## How to Use
+### Install kafka (bitnami) in your k8s cluster
+after you install helm use these commands:
 
-You only need Docker to be installed on your machine.
+`helm repo add bitnami https://charts.bitnami.com/bitnami`
 
-## Launching the project
+`helm install my-release bitnami/kafka`
+### Clone this repo
+`git clone https://github.com/oubaydos/TAG-Visualization`
+### Update cassandra url in deployment yaml files
+Note: check this repo for a terraform script that creates a gcp VM with cassandra in port 9042
+### apply the deployment files
+`kubectl apply -f deployment`
 
-    docker-compose up -d
-
-## Accessing the project
-    
-        http://localhost:8080
-
-## Notes
-
-After all the containers are up and running, please wait 120s before you can access the project on http://localhost:8080, as cassandra, and kafka need some time to start up.
+and all is set
