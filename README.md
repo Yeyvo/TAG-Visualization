@@ -6,7 +6,7 @@ after you install helm use these commands:
 
 `helm install my-release bitnami/kafka`
 ### Clone this repo
-`git clone https://github.com/oubaydos/TAG-Visualization`
+`git clonethe repo`
 ### Update cassandra url in deployment yaml files
 Note: check this repo [Terraform Repo](https://github.com/oubaydos/terraform/tree/cassandra) for a terraform script that creates a gcp VM with cassandra in port 9042
 ### apply the deployment files
