@@ -1,7 +1,8 @@
 
 // Variables
 
-var URL = "http://35.239.185.186";
+var URL = window.location.origin;
+// var URL = "http://35.239.185.186";
 var PORT = "";
 
 var liveTraj = false
