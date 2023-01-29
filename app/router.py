@@ -86,7 +86,7 @@ def consume_trams():
     finally:
         c.close()
 
-@route.get('/new-subs')
+@route.get('/app-tcp/new-subs')
 async def get_new_subs(request: Request):
     result = []
     if request.query_params['type'] == "past days":
@@ -95,7 +95,7 @@ async def get_new_subs(request: Request):
         result = load_new_subs_now()
     return result
 
-@route.get('/trajets')
+@route.get('/app-tcp/trajets')
 async def get_frequented_tram(request: Request):
     result = []
     if request.query_params['type'] == "past days":
@@ -104,7 +104,7 @@ async def get_frequented_tram(request: Request):
         result = load_trajets_usage_now()
     return result
 
-@route.get('/stations')
+@route.get('/app-tcp/stations')
 async def get_frequented_station(request: Request):
     result = []
     station = request.query_params['station']
