@@ -1,7 +1,7 @@
 
 // Variables
 
-var URL = "http://localhost:";
+var URL = "http://35.239.185.186:";
 var PORT = "8000";
 
 var liveTraj = false
