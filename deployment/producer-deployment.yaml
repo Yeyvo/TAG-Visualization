@@ -34,7 +34,7 @@ spec:
             - name: BROKER_PORT
               value: "9092"
             - name: KAFKA_VALIDATION_TOPIC
-              value: temp
+              value: new_subs
           image: yeyloo/producer-sdtd
           name: producer
           resources: {}
