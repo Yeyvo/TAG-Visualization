@@ -9,7 +9,7 @@ services:
     container_name: producer
     environment:
       BROKER_NAME: my-release-kafka-0.my-release-kafka-headless.default.svc.cluster.local
-      KAFKA_VALIDATION_TOPIC: new_subs
+      KAFKA_VALIDATION_TOPIC: temp
       BROKER_PORT: 9092
 
   consumer:
@@ -32,8 +32,7 @@ services:
     tty: true
     image: yeyloo/app-sdtd
     build: ./app/
-    command: sh -c "python service.py"
-    #sleep 130; 
+    command: sh -c "python service.py"#sleep 130;
     container_name: app
     ports:
       - "8000:8000"
