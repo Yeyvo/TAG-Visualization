@@ -32,7 +32,8 @@ services:
     tty: true
     image: yeyloo/app-sdtd
     build: ./app/
-    command: sh -c "python service.py"#sleep 130;
+    command: sh -c "python service.py"
+    #sleep 130;
     container_name: app
     ports:
       - "8000:8000"
