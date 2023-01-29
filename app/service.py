@@ -15,7 +15,7 @@ setup_db()
 #create an api object, a new fastapi
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-app.mount("/app-tcp/static", StaticFiles(directory="./static"), name="static")
+app.mount("/static", StaticFiles(directory="./static"), name="static")
 
 #endpoint
 @app.get('/app-tcp/', response_class=HTMLResponse)
