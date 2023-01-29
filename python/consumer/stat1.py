@@ -3,7 +3,7 @@ import pandas as pd
 import math
 import warnings
 
-from consumer_config import KAFKA_PRODUCER_URL, CASSANDRA_PORT, CASSANDRA_SERVICE_NAME, CASSANDRA_KEYSPACE
+from consumer_config import KAFKA_PRODUCER_URL, CASSANDRA_PORT, CASSANDRA_SERVICE_NAME, CASSANDRA_KEYSPACE, KAFKA_SUBS_TOPIC, KAFKA_USAGE_TOPIC
 from cassandra.auth import PlainTextAuthProvider
 
 warnings.filterwarnings('ignore')
@@ -60,13 +60,13 @@ def process_data_1(users_data, date, update):
         to_send = {"day": date, "new_subscribers": [{"number": len(new_users), "monthly": len(details['month'])
                                                         , "year": len(details['year'])}]}
 
-        producer.send('new_subs', bytes(str(to_send), encoding='utf-8'))
+        producer.send(KAFKA_SUBS_TOPIC, bytes(str(to_send), encoding='utf-8'))
 
 
 
     else:
         NS = int(
-            pd.DataFrame(list(session.execute(f'SELECT new_subs FROM statistics_1 where day=\'{date}\';')))['new_subs'][
+            pd.DataFrame(list(session.execute(f'SELECT new_subs FROM statistics_1 where day=\'{date}\';')))[KAFKA_SUBS_TOPIC][
                 0]) + len(new_users)
         MU = int(pd.DataFrame(list(session.execute(f'SELECT month_user FROM statistics_1 where day=\'{date}\';')))[
                      'month_user'][0]) + len(details['month'])
@@ -79,7 +79,7 @@ def process_data_1(users_data, date, update):
         to_send = {"day": date, "new_subscribers": [{"number": NS, "monthly": MU
                                                         , "year": YU}]}
 
-        producer.send('new_subs', bytes(str(to_send), encoding='utf-8'))
+        producer.send(KAFKA_SUBS_TOPIC, bytes(str(to_send), encoding='utf-8'))
 
     print("statisctics saved!")
 
@@ -126,7 +126,7 @@ def statistics_1(session, producer):
          FROM Event;")))
         date_exists = False
         while(date_exists == False):
-            if(len(dates.columns) >=0):
+            if(len(dates.columns) > 0):
                 dates = pd.DataFrame(list(session.execute(f"SELECT toDate(timestamp) as date\
                          FROM Event;")))['date'].unique()
                 date_exists = True
@@ -215,7 +215,7 @@ def statistics_1(session, producer):
 
                         NS = int(pd.DataFrame(
                             list(session.execute(f'SELECT new_subs FROM statistics_1 where day=\'{record_ts_1}\';')))[
-                                     'new_subs'][0]) + 1
+                                     KAFKA_SUBS_TOPIC][0]) + 1
                         MU = int(pd.DataFrame(
                             list(session.execute(f'SELECT month_user FROM statistics_1 where day=\'{record_ts_1}\';')))[
                                      'month_user'][0]) + 1
@@ -226,11 +226,11 @@ def statistics_1(session, producer):
                         to_send = {"day": record_ts_1, "new_subscribers": [{"number": NS, "monthly": MU
                                                                                , "year": (NS - MU)}]}
 
-                        producer.send('new_subs', bytes(str(to_send), encoding='utf-8'))
+                        producer.send(KAFKA_SUBS_TOPIC, bytes(str(to_send), encoding='utf-8'))
                     else:
                         NS = int(pd.DataFrame(
                             list(session.execute(f'SELECT new_subs FROM statistics_1 where day=\'{record_ts_1}\';')))[
-                                     'new_subs'][0]) + 1
+                                     KAFKA_SUBS_TOPIC][0]) + 1
                         YU = int(pd.DataFrame(
                             list(session.execute(f'SELECT year_user FROM statistics_1 where day=\'{record_ts_1}\';')))[
                                      'year_user'][0]) + 1
@@ -241,7 +241,7 @@ def statistics_1(session, producer):
                         to_send = {"day": record_ts_1, "new_subscribers": [{"number": NS, "monthly": (NS - YU)
                                                                                , "year": YU}]}
 
-                        producer.send('new_subs', bytes(str(to_send), encoding='utf-8'))
+                        producer.send(KAFKA_SUBS_TOPIC, bytes(str(to_send), encoding='utf-8'))
 
                         print(f"new record have been processed {record_ts}")
 
@@ -254,7 +254,7 @@ def statistics_1(session, producer):
                         to_send = {"day": record_ts_1, "new_subscribers": [{"number": 1, "monthly": 1
                                                                                , "year": 0}]}
 
-                        producer.send('new_subs', bytes(str(to_send), encoding='utf-8'))
+                        producer.send(KAFKA_SUBS_TOPIC, bytes(str(to_send), encoding='utf-8'))
                         print(f"new record have been processed {record_ts}")
                     else:
                         session.execute(f"INSERT INTO statistics_1(day, month_user, new_subs, year_user,LPRD)\
@@ -263,7 +263,7 @@ def statistics_1(session, producer):
                         to_send = {"day": record_ts_1, "new_subscribers": [{"number": 1, "monthly": 0
                                                                                , "year": 1}]}
 
-                        producer.send('new_subs', bytes(str(to_send), encoding='utf-8'))
+                        producer.send(KAFKA_SUBS_TOPIC, bytes(str(to_send), encoding='utf-8'))
 
                         print(f"new record have been processed {record_ts}")
 

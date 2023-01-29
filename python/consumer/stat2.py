@@ -3,7 +3,7 @@ import pandas as pd
 import math
 import warnings
 
-from consumer_config import CASSANDRA_SERVICE_NAME, CASSANDRA_PORT, CASSANDRA_KEYSPACE, KAFKA_PRODUCER_URL
+from consumer_config import CASSANDRA_SERVICE_NAME, CASSANDRA_PORT, CASSANDRA_KEYSPACE, KAFKA_PRODUCER_URL, KAFKA_SUBS_TOPIC, KAFKA_USAGE_TOPIC
 from cassandra.auth import PlainTextAuthProvider
 
 warnings.filterwarnings('ignore')
@@ -119,7 +119,7 @@ def StreamingStat2(session,producer):
                         to_send = {"day": last_day, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                        producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))
+                        producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))
 
                         del line_A
                         del line_B
@@ -139,7 +139,7 @@ def StreamingStat2(session,producer):
                         to_send = {"day": last_day, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                        producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))      
+                        producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))      
 
                         del line_A
                         del line_B
@@ -175,7 +175,7 @@ def StreamingStat2(session,producer):
                                     to_send = {"day": last_day, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                                    producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))     
+                                    producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))     
 
                                     j+=1 
                             
@@ -192,7 +192,7 @@ def StreamingStat2(session,producer):
                             to_send = {"day": last_day, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                            producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))     
+                            producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))     
                             
                             j+=1 
 
@@ -244,7 +244,7 @@ def StreamingStat2(session,producer):
                                     to_send = {"day": last_day, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                                    producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))     
+                                    producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))     
 
                                     j+=1
                                                      
@@ -257,7 +257,7 @@ def StreamingStat2(session,producer):
                             to_send = {"day": last_day, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                            producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))     
+                            producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))     
 
                             j+=1
 
@@ -283,7 +283,9 @@ def StreamingStat2(session,producer):
         date_exists = False
 
         while(date_exists == False):
-            if(len(dates.columns) >=0):
+
+            if(len(dates.columns) > 0):
+
                 dates = pd.DataFrame(list(session.execute(f"SELECT toDate(timestamp) as date\
                          FROM Event;")))['date'].unique()
                 date_exists = True
@@ -348,7 +350,7 @@ def StreamingStat2(session,producer):
                             to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                            producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8'))     
+                            producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8'))     
 
                             j=j+1   
                                                      
@@ -363,7 +365,7 @@ def StreamingStat2(session,producer):
                         to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                        producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                        producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
                         
                         j=j+1
 
@@ -463,7 +465,7 @@ def StreamingStat2(session,producer):
                             to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                            producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                            producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
 
                             del line_A
                             del line_B
@@ -484,7 +486,7 @@ def StreamingStat2(session,producer):
                             to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                            producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                            producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
                             
                             del line_A
                             del line_B
@@ -526,7 +528,7 @@ def StreamingStat2(session,producer):
                                         to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                                        producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                                        producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
 
                                         j+=1  
                                                         
@@ -541,7 +543,7 @@ def StreamingStat2(session,producer):
                                 to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                                producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                                producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
 
 
                                 j+=1
@@ -597,7 +599,7 @@ def StreamingStat2(session,producer):
                                     to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                                    producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                                    producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
 
 
                                     j+=1
@@ -612,7 +614,7 @@ def StreamingStat2(session,producer):
                             to_send = {"day": date, "interval_start": from_0, "interval_stop": from_to[from_0], "tram_A":
                          [str(line_A)], "tram_B": [str(line_B)], "tram_C": [str(line_C)]}
 
-                            producer.send('frequented_tram', bytes(str(to_send), encoding='utf-8')) 
+                            producer.send(KAFKA_USAGE_TOPIC, bytes(str(to_send), encoding='utf-8')) 
 
 
                             j+=1
