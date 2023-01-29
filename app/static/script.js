@@ -75,7 +75,7 @@ function getNewSubs(live) {
         subsChart.destroy();
     }
     endpoint = "new-subs?type=" + (live ? "today" : "past days");
-    fetch(URL+PORT+'/' + endpoint)
+    fetch(URL+PORT+'/app-tcp/' + endpoint)
     .then(res => res.json())
     .then(data => {
         
@@ -96,7 +96,7 @@ function getTrajData(live) {
         trajChart.destroy();
     }
     endpoint = "trajets?type=" + (live ? "today" : "past days");
-    fetch(URL+PORT+'/' + endpoint)
+    fetch(URL+PORT+'/app-tcp/' + endpoint)
     .then(res => res.json())
     .then(data => {
         
@@ -118,7 +118,7 @@ function getStationData(live) {
     }
     station = selectedStation.value;
     endpoint = "stations?type=" + (live ? "today" : "past days") + "&station=" + station;
-    fetch(URL+PORT+'/' + endpoint)
+    fetch(URL+PORT+'/app-tcp/' + endpoint)
     .then(res => res.json())
     .then(data => {
         
@@ -143,7 +143,7 @@ function clear(){
 
 setInterval(() => {
     if (liveSubs) {
-        fetch(URL+PORT+'/new-subs?type=today')
+        fetch(URL+PORT+'/app-tcp/new-subs?type=today')
         .then(res => res.json())
         .then(data => {
             if (subsChart.data.labels.length > 10) {
@@ -164,7 +164,7 @@ setInterval(() => {
 
 setInterval(() => {
     if (liveTraj) {
-        fetch(URL+PORT+'/trajets?type=today')
+        fetch(URL+PORT+'/app-tcp/trajets?type=today')
         .then(res => res.json())
         .then(data => {
             if (trajChart.data.labels.length > 10) {
@@ -187,7 +187,7 @@ setInterval(() => {
 
 setInterval(() => {
     if (liveStation) {
-        fetch(URL+PORT+'/stations?type=today&station=' + selectedStation.value)
+        fetch(URL+PORT+'/app-tcp/stations?type=today&station=' + selectedStation.value)
         .then(res => res.json())
         .then(data => {
             if (stationChart.data.labels.length > 10) {

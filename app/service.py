@@ -15,10 +15,10 @@ setup_db()
 #create an api object, a new fastapi
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="./static"), name="static")
+app.mount("/app-tcp/static", StaticFiles(directory="./static"), name="static")
 
 #endpoint
-@app.get('/', response_class=HTMLResponse)
+@app.get('/app-tcp/', response_class=HTMLResponse)
 async def Home(request: Request):
     stations = await router.get_stations()
     return templates.TemplateResponse("index.html", context={"request": request, "stations": stations})
