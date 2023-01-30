@@ -291,6 +291,7 @@ def StreamingStat2(session,producer):
                 date_exists = True
             else:
                 print("Event table is empty\nretry fetching data...")
+                time.sleep(5)
                 dates = pd.DataFrame(list(session.execute(f"SELECT toDate(timestamp) as date\
                  FROM Event;")))
 

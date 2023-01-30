@@ -102,9 +102,10 @@ if __name__ == "__main__":
     consumer = None
     while True:
         try:
-            consumer = KafkaConsumer(bootstrap_servers=KAFKA_PRODUCER_URL)
+            consumer = KafkaConsumer(bootstrap_servers=KAFKA_CONSUMER_URL)
             break
-        except:
+        except Exception as e:
+            print(e)
             print("Connection to the kafka cluster failed, retrying in 5 seconds")
             time.sleep(5)
 
