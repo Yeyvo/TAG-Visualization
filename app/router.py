@@ -17,7 +17,7 @@ def consume_subs():
     #while true try to create consumer
     while True:
         try:
-            c=Consumer({'bootstrap.servers':config.kafka_url,'group.id':'python-consumer','auto.offset.reset':'earliest'})
+            c=Consumer({'bootstrap.servers':config.kafka_url,'group.id':'python-consumer','auto.offset.reset':'earliest', 'api_version':(0, 10, 1)})
             break
         except:
             print("Error while creating consumer")
@@ -54,7 +54,7 @@ def consume_trams():
     #les nouveaux adhérents
     while True:
         try:
-            c=Consumer({'bootstrap.servers':config.kafka_url,'group.id':'python-consumer','auto.offset.reset':'earliest'})
+            c=Consumer({'bootstrap.servers':config.kafka_url,'group.id':'python-consumer','auto.offset.reset':'earliest', 'api_version':(0, 10, 1)})
             break
         except:
             print("Error while creating consumer")
