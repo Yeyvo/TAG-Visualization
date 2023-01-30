@@ -10,7 +10,7 @@ producer = None
 while True:
     try:
         print("Connecting to the Kafka..........")
-        producer = KafkaProducer(bootstrap_servers=BROKER_URL)
+        producer = KafkaProducer(bootstrap_servers=BROKER_URL,  api_version=(0, 10, 1))
         if producer.bootstrap_connected() is True:
             break
     except:
