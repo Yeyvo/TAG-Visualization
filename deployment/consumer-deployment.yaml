@@ -1,9 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o deployment/ --build local --push-image=True -v
-    kompose.version: 1.27.0 (b0ed6a2c9)
   creationTimestamp: null
   labels:
     io.kompose.service: consumer
@@ -16,9 +13,6 @@ spec:
   strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o deployment/ --build local --push-image=True -v
-        kompose.version: 1.27.0 (b0ed6a2c9)
       creationTimestamp: null
       labels:
         io.kompose.service: consumer
@@ -43,8 +37,12 @@ spec:
               value: test
             - name: CASSANDRA_PORT
               value: "9042"
-            - name: CASSANDRA_URL
+            - name: CASSANDRA_URL_NODE_0
               value: 10.240.0.70
+            - name: CASSANDRA_URL_NODE_1
+              value: 10.240.0.71
+            - name: CASSANDRA_URL_NODE_2
+              value: 10.240.0.72
             - name: KAFKA_VALIDATION_TOPIC
               value: temp
           image: yeyloo/consumer-sdtd

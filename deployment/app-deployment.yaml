@@ -2,10 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o deployment/ --build local --push-image=True -v
     kompose.service.nodeport.port: "31000"
     kompose.service.type: nodeport
-    kompose.version: 1.27.0 (b0ed6a2c9)
   creationTimestamp: null
   labels:
     io.kompose.service: app
@@ -19,10 +17,8 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o deployment/ --build local --push-image=True -v
         kompose.service.nodeport.port: "31000"
         kompose.service.type: nodeport
-        kompose.version: 1.27.0 (b0ed6a2c9)
       creationTimestamp: null
       labels:
         io.kompose.service: app
@@ -45,8 +41,12 @@ spec:
               value: test
             - name: CASSANDRA_PORT
               value: "9042"
-            - name: CASSANDRA_URL
+            - name: CASSANDRA_URL_NODE_0
               value: 10.240.0.70
+            - name: CASSANDRA_URL_NODE_1
+              value: 10.240.0.71
+            - name: CASSANDRA_URL_NODE_2
+              value: 10.240.0.72
           image: yeyloo/app-sdtd
           name: app
           ports:
