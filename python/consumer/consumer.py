@@ -91,7 +91,7 @@ if __name__ == "__main__":
         try:
             print("Connecting to the Cluster..........")
             # auth_provider = PlainTextAuthProvider(username='cassandra', password='cassandra')
-            cluster = Cluster([CASSANDRA_SERVICE_NAME], port=CASSANDRA_PORT)#,auth_provider=auth_provider
+            cluster = Cluster(CASSANDRA_SERVICE_NAME, port=CASSANDRA_PORT)#,auth_provider=auth_provider
             session = cluster.connect(CASSANDRA_KEYSPACE)
             break
         except:
@@ -102,10 +102,9 @@ if __name__ == "__main__":
     consumer = None
     while True:
         try:
-            consumer = KafkaConsumer(bootstrap_servers=KAFKA_CONSUMER_URL,  api_version=(0, 10, 1))
+            consumer = KafkaConsumer(bootstrap_servers=KAFKA_CONSUMER_URL)
             break
-        except Exception as e:
-            print(e)
+        except:
             print("Connection to the kafka cluster failed, retrying in 5 seconds")
             time.sleep(5)
 
