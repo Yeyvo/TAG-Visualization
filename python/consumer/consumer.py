@@ -102,7 +102,7 @@ if __name__ == "__main__":
     consumer = None
     while True:
         try:
-            consumer = KafkaConsumer(bootstrap_servers=KAFKA_CONSUMER_URL)
+            consumer = KafkaConsumer(bootstrap_servers=KAFKA_PRODUCER_URL)
             break
         except Exception as e:
             print(e)
