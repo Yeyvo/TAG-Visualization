@@ -15,7 +15,7 @@ def setup_db():
     while True:
         try:
 
-            connection.setup([config.CASSANDRA_SERVICE_NAME], config.CASSANDRA_KEYSPACE, protocol_version=3)
+            connection.setup(config.CASSANDRA_SERVICE_NAME, config.CASSANDRA_KEYSPACE, protocol_version=3)
             sync_table(NewSubs)
             sync_table(Trajet)
             sync_table(Station)
