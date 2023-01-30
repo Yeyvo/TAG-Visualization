@@ -655,7 +655,7 @@ if __name__ == "__main__":
         try:
             print("Connecting to the Cluster..........")
             # auth_provider = PlainTextAuthProvider(username='cassandra', password='cassandra')
-            cluster = Cluster(CASSANDRA_SERVICE_NAME, port=CASSANDRA_PORT)#,auth_provider=auth_provider
+            cluster = Cluster([CASSANDRA_SERVICE_NAME], port=CASSANDRA_PORT)#,auth_provider=auth_provider
             
             break
         except:

@@ -26,9 +26,7 @@ services:
       BROKER_SUBSCRIPTION_TOPIC: 'new_subs'
       BROKER_USAGE_TOPIC: 'frequented_tram'
       CASSANDRA_PORT: 9042
-      CASSANDRA_URL_NODE_0: '10.240.0.70'
-      CASSANDRA_URL_NODE_1: '10.240.0.71'
-      CASSANDRA_URL_NODE_2: '10.240.0.72'
+      CASSANDRA_URL: '10.240.0.70'
       CASSANDRA_KEYSPACE: 'test'
   app:
     tty: true
@@ -47,8 +45,6 @@ services:
       BROKER_PORT: 9092
       BROKER_SUBSCRIPTION_TOPIC: 'new_subs'
       BROKER_USAGE_TOPIC: 'frequented_tram'
-      CASSANDRA_URL_NODE_0: '10.240.0.70'
-      CASSANDRA_URL_NODE_1: '10.240.0.71'
-      CASSANDRA_URL_NODE_2: '10.240.0.72'
+      CASSANDRA_URL: '10.240.0.70'
       CASSANDRA_PORT: 9042
       CASSANDRA_KEYSPACE: 'test'
